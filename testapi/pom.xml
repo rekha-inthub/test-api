@@ -15,8 +15,6 @@
 
 		<app.runtime>4.9.7</app.runtime>
 		<mule.maven.plugin.version>4.3.0</mule.maven.plugin.version>
-		<!-- Define the version for exchange-mule-maven-plugin based on the error -->
-		<exchange.mule.maven.plugin.version>0.0.23</exchange.mule.maven.plugin.version>
 	</properties>
 
 	<build>
@@ -33,10 +31,6 @@
 				<extensions>true</extensions>
 				<configuration>
 					<classifier>mule-application</classifier>
-					<!-- These skips are for the main mule-maven-plugin, but might not affect implicitly called plugins -->
-                    <!-- <skip>true</skip> -->
-                    <!-- <skipConnect>true</skipConnect> -->
-                    <skipDeployment>false</skipDeployment> <!-- Ensure deployment is NOT skipped -->
 					<cloudhub2Deployment>
 						<uri>https://anypoint.mulesoft.com</uri>
 						<provider>MC</provider>
@@ -51,25 +45,9 @@
 						<vCores>0.1</vCores>
 						<skipDeploymentVerification>true</skipDeploymentVerification>
 					</cloudhub2Deployment>
-				</configuration>
-			</plugin>
-			<!-- Explicitly configure exchange-mule-maven-plugin to skip its execution -->
-			<plugin>
-				<groupId>org.mule.tools.maven</groupId>
-				<artifactId>exchange-mule-maven-plugin</artifactId>
-				<version>${exchange.mule.maven.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>default-exchange-pre-deploy</id>
-						<phase>none</phase> <!-- This will prevent the goal from running -->
-					</execution>
-					<execution>
-						<id>default-exchange-deploy</id>
-						<phase>none</phase> <!-- Also prevent the main deploy goal if it exists -->
-					</execution>
-				</executions>
-				<configuration>
-					<skip>true</skip> <!-- General skip for this plugin -->
+					<skip>true</skip>
+					<skipConnect>true</skipConnect>
+					<skipDeployment>false</skipDeployment>
 				</configuration>
 			</plugin>
 		</plugins>
