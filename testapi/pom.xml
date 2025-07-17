@@ -15,6 +15,8 @@
 
 		<app.runtime>4.9.7</app.runtime>
 		<mule.maven.plugin.version>4.3.0</mule.maven.plugin.version>
+		<!-- Define the version for exchange-mule-maven-plugin based on the error -->
+		<exchange.mule.maven.plugin.version>0.0.23</exchange.mule.maven.plugin.version>
 	</properties>
 
 	<build>
@@ -31,6 +33,8 @@
 				<extensions>true</extensions>
 				<configuration>
 					<classifier>mule-application</classifier>
+                    <!-- Removed general skip properties from here to avoid conflicts -->
+                    <skipDeployment>false</skipDeployment> <!-- Ensure deployment is NOT skipped -->
 					<cloudhub2Deployment>
 						<uri>https://anypoint.mulesoft.com</uri>
 						<provider>MC</provider>
@@ -45,9 +49,18 @@
 						<vCores>0.1</vCores>
 						<skipDeploymentVerification>true</skipDeploymentVerification>
 					</cloudhub2Deployment>
-					<skip>true</skip>
-					<skipConnect>true</skipConnect>
-					<skipDeployment>false</skipDeployment>
+				</configuration>
+			</plugin>
+			<!-- Explicitly configure exchange-mule-maven-plugin to skip its execution -->
+			<plugin>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>exchange-mule-maven-plugin</artifactId>
+				<version>${exchange.mule.maven.plugin.version}</version>
+				<executions>
+                    <!-- By providing an empty executions block, no goals will be executed by default -->
+				</executions>
+				<configuration>
+					<skip>true</skip> <!-- General skip for this plugin -->
 				</configuration>
 			</plugin>
 		</plugins>
