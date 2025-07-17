@@ -7,7 +7,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
-  
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -25,33 +24,33 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: actions/cache@v4
-        with: 
+        with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml')}}
           restore-keys: |
-            ${{ runner.os }}-maven-
+             ${{ runner.os }}-maven-
 
-      
       - name: Setup Java JDK
         uses: actions/setup-java@v3.14.1
         with:
           java-version: 17
-          distribution: 'temurin' # <--- THIS IS THE MISSING INPUT
-          cache: maven # or gradle, if you're using gradle
-      - name: Print effective-settings (optional)
-        run: mvn help:effective-settings
+          distribution: 'temurin'
+          cache: maven
+
       
+
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-      
+        working-directory: testapi # <--- ADDED THIS LINE: Assumes pom.xml is in a 'testapi' subdirectory
+
       - name: Stamp artifact file name with commit hash
         run: |
           artifactName1=$(ls target/*.jar | head -1)
           commitHash=$(git rev-parse --short "$GITHUB_SHA")
           artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/-$commitHash.jar/g")
           mv $artifactName1 $artifactName2
-      
-      - name: Upload artifact 
+
+      - name: Upload artifact
         uses: actions/upload-artifact@master
         with:
             name: artifacts
