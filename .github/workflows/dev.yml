@@ -56,3 +56,10 @@ jobs:
         with:
             name: artifacts
             path: testapi/target/*.jar
+            
+      - name: Deploy to CloudHub 2.0
+        run: mvn deploy -Dmule.env=${{ secrets.MULE_ENV }} # Pass environment variable for dynamic deployment
+        working-directory: testapi
+        env:
+          anypoint.username: ${{ secrets.ANYPOINT_USERNAME }}
+          anypoint.password: ${{ secrets.ANYPOINT_PASSWORD }}
