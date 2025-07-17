@@ -45,6 +45,9 @@
 						<vCores>0.1</vCores>
 						<skipDeploymentVerification>true</skipDeploymentVerification>
 					</cloudhub2Deployment>
+					<skip>true</skip>
+					<skipConnect>true</skipConnect>
+					<skipDeployment>false</skipDeployment>
 				</configuration>
 			</plugin>
 		</plugins>
