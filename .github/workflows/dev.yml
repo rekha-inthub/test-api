@@ -37,9 +37,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Print effective-settings (optional)
-        run: mvn help:effective-settings --settings .github/settings.xml
-        #working-directory: testapi # Ensure this runs from the correct directory
+      
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml --settings .github/settings.xml
