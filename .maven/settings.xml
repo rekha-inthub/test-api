@@ -10,14 +10,24 @@
 
   <servers>
     <server>
-      <id>MuleRepository</id>
-      <username>${anypoint.username}</username>
-      <password>${anypoint.password}</password>
+      <id>Exchange2</id>
+      <username>rekhakoyala</username>
+      <password>Omshakthi*123</password>
     </server>
 	<server>
-      <id>anypoint-exchange</id>
-      <username>${env.ANYPOINT_USERNAME}</username>
-      <password>${env.ANYPOINT_PASSWORD}</password>
+      <id>Repository1</id>
+      <username>rekhakoyala</username>
+      <password>Omshakthi*123</password>
+    </server>
+    <server>
+      <id>anypoint-exchange-v2</id>
+      <username>rekhakoyala</username>
+      <password>Omshakthi*123</password>
+    </server>
+	<server>
+      <id>anypoint-exchange-v3</id>
+      <username>rekhakoyala</username>
+      <password>Omshakthi*123</password>
     </server>
   </servers>
 
