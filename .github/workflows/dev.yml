@@ -43,22 +43,26 @@ jobs:
         run: mvn -B package --file pom.xml
         working-directory: testapi # <--- ADDED THIS LINE: Assumes pom.xml is in a 'testapi' subdirectory
 
-      - name: Stamp artifact file name with commit hash
-        run: |
-          artifactName1=$(ls target/*.jar | head -1)
-          commitHash=$(git rev-parse --short "$GITHUB_SHA")
-          artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/-$commitHash.jar/g")
-          mv $artifactName1 $artifactName2
-        working-directory: testapi # <--- ADDED THIS LINE  
+      # - name: Stamp artifact file name with commit hash
+      #   run: |
+      #     artifactName1=$(ls target/*.jar | head -1)
+      #     commitHash=$(git rev-parse --short "$GITHUB_SHA")
+      #     artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/-$commitHash.jar/g")
+      #     mv $artifactName1 $artifactName2
+      #   working-directory: testapi  # <--- ADDED THIS LINE
+
 
       - name: Upload artifact
         uses: actions/upload-artifact@master
         with:
             name: artifacts
             path: testapi/target/*.jar
+      - name: List target contents
+        run: ls -l target
+        working-directory: testapi
             
       - name: Deploy to CloudHub 2.0
-        run: mvn deploy -Dmule.env=${{ secrets.dev }} #-DskipMuleDeploy=true -DskipExchange=true # Pass environment variable for dynamic deployment
+        run: mvn deploy -Dmule.env=${{ secrets.dev }} -DskipExchange=true #-DskipMuleDeploy=true -DskipExchange=true # Pass environment variable for dynamic deployment
         working-directory: testapi
         env:
           anypoint.username: ${{ secrets.ANYPOINT_USERNAME }}
