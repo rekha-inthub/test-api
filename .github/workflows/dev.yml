@@ -37,6 +37,15 @@ jobs:
         uses: actions/setup-java@v3.14.1
         with:
           java-version: 17
+          distribution: 'temurin' # <--- This line is required and was missing in your error output
+          java-package: jdk
+          check-latest: false
+          server-id: github
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
+          overwrite-settings: true
+          job-status: success
+          token: ***
     
       - name: Print effective-settings (optional)
         run: mvn help:effective-settings
